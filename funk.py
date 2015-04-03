@@ -1,3 +1,5 @@
+from functools import wraps
+
 def match(matches, result):
     ''' Match arguments of tuple matches and return result when they are used
         If there is not a match, call the function
@@ -6,6 +8,7 @@ def match(matches, result):
         after the item, or it is interpreted as a pair of parens
     '''
     def decorator(f):
+        @wraps(f)
         def inner(*args):
             if args == matches:
                 return result
@@ -25,6 +28,7 @@ def match_pred(matches, result):
         after the item, or it is interpreted as a pair of parens
     '''
     def decorator(f):
+        @wraps(f)
         def inner(*args):
             if all(match is None or match(arg) for match, arg in zip(matches, args)):
                 return result
@@ -39,6 +43,7 @@ def precondition(pred):
         Raises a ValueError if not
     '''
     def decorator(f):
+        @wraps(f)
         def inner(*args, **kwargs):
             if pred(*args, **kwargs):
                 return f(*args, **kwargs)
@@ -54,6 +59,7 @@ def postcondition(pred):
         Raises a ValueError if not
     '''
     def decorator(f):
+        @wraps(f)
         def inner(*args, **kwargs):
             result = f(*args, **kwargs)
             if pred(result):
