@@ -32,6 +32,39 @@ def match_pred(matches, result):
         return inner
     return decorator
 
+def precondition(pred):
+    ''' Require that a predicate on the arguments be matched in order
+        for the function to be called.
+
+        Raises a ValueError if not
+    '''
+    def decorator(f):
+        def inner(*args, **kwargs):
+            if pred(*args, **kwargs):
+                return f(*args, **kwargs)
+            else:
+                raise ValueError("Precondition not met!")
+        return inner
+    return decorator
+
+def postcondition(pred):
+    ''' Require that a predicate on the return value to 
+        be matched in order for the function to return.
+
+        Raises a ValueError if not
+    '''
+    def decorator(f):
+        def inner(*args, **kwargs):
+            result = f(*args, **kwargs)
+            if pred(result):
+                return result
+            else:
+                raise ValueError("Postcondition not met!")
+        return inner
+    return decorator
+
+@precondition(lambda x: x >= 0)
+@postcondition(lambda x: x > 0)
 @match((0,), 1)
 @match((1,), 1)
 def fib_match(n):
