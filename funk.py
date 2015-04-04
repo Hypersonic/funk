@@ -9,10 +9,10 @@ def match(matches, result):
     '''
     def decorator(f):
         @wraps(f)
-        def inner(*args):
+        def inner(*args, **kwargs):
             if args == matches:
                 return result
-            return f(*args)
+            return f(*args, **kwargs)
         return inner
     return decorator
 
@@ -29,10 +29,10 @@ def match_pred(matches, result):
     '''
     def decorator(f):
         @wraps(f)
-        def inner(*args):
+        def inner(*args, **kwargs):
             if all(match is None or match(arg) for match, arg in zip(matches, args)):
                 return result
-            return f(*args)
+            return f(*args, **kwargs)
         return inner
     return decorator
 
