@@ -69,6 +69,18 @@ def postcondition(pred):
         return inner
     return decorator
 
+def memoize(f):
+    ''' Memoize a function by caching the return values of any calls
+        Arguments must be hashable (ie, usable as a dict key)
+        If the function is impure, this may return unexpected results
+    '''
+    cache = {}
+    def inner(*args):
+        if not args in cache:
+            cache[args] = f(*args)
+        return cache[args]
+    return inner
+
 @precondition(lambda x: x >= 0)
 @postcondition(lambda x: x > 0)
 @match((0,), 1)
@@ -84,7 +96,13 @@ def fib_pred(n):
     '''
     return fib_pred(n-1) + fib_pred(n-2)
 
+@memoize
+def fib_memo(n):
+    if n <= 1: return 1
+    return fib_memo(n-1) + fib_memo(n-2)
+
 
 if __name__ == '__main__':
     print fib_match(10)
     print fib_pred(10)
+    print fib_memo(10)
