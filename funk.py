@@ -4,6 +4,8 @@ def match(matches, result):
     ''' Match arguments of tuple matches and return result when they are used
         If there is not a match, call the function
 
+        You cannot match kwargs
+
         WARNING: With single item tuples, you must put a comma
         after the item, or it is interpreted as a pair of parens
     '''
@@ -23,6 +25,8 @@ def match_pred(matches, result):
         Elements that are None will act as if they always return True
 
         If there is not a match, call the function
+
+        You cannot match on kwargs
 
         WARNING: With single item tuples, you must put a comma
         after the item, or it is interpreted as a pair of parens
