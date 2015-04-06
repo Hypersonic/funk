@@ -80,6 +80,7 @@ def memoize(f):
         Does not work on functions that require kwargs
     '''
     cache = {}
+    @wraps(f)
     def inner(*args):
         if not args in cache:
             cache[args] = f(*args)
