@@ -76,11 +76,13 @@ def postcondition(pred):
 def memoize(f):
     ''' Memoize a function by caching the return values of any calls
         Arguments must be hashable (ie, usable as a dict key)
+
         If the function is impure, this may return unexpected results
+
         Does not work on functions that require kwargs
     '''
     cache = {}
-    @wraps(f)
+    @wraps(f)w
     def inner(*args):
         if not args in cache:
             cache[args] = f(*args)
