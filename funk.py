@@ -82,11 +82,12 @@ def memoize(f):
         Does not work on functions that require kwargs
     '''
     cache = {}
-    @wraps(f)w
+    @wraps(f)
     def inner(*args):
         if not args in cache:
-            cache[args] = f(*args)
-        return cache[args]
+            value = cache[args] = f(*args)
+        else: value = cache[args]
+        return value
     return inner
 
 @precondition(lambda x: x >= 0)
