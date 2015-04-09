@@ -52,7 +52,7 @@ def precondition(pred):
             if pred(*args, **kwargs):
                 return f(*args, **kwargs)
             else:
-                raise ValueError("Precondition not met!")
+                raise ValueError("Precondition not met on function %s!"%f.func_name)
         return inner
     return decorator
 
@@ -69,7 +69,7 @@ def postcondition(pred):
             if pred(result):
                 return result
             else:
-                raise ValueError("Postcondition not met!")
+                raise ValueError("Postcondition not met on function %s!"%f.func_name)
         return inner
     return decorator
 
