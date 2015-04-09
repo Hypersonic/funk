@@ -90,6 +90,29 @@ def memoize(f):
         return value
     return inner
 
+def lookup_table(*lookups):
+    ''' Create a lookup table that gets checked before the function
+        gets actually called.
+        The results of the lookup are generated as the function is first called
+        by running the function for each lookup value.
+    '''
+    table = {}
+    table_generated = False
+    def decorator(f):
+        def inner(*args, **kwargs):
+            # Generate the lookup table on the first call
+            if not table_generated:
+                for arg in lookups:
+                    table[arg] = f(arg)
+                table_generated = True
+
+            if args in table:
+                return table[args]
+            else:
+                return f(*args, **kwargs);
+        return inner
+    return decorator
+
 @precondition(lambda x: x >= 0)
 @postcondition(lambda x: x > 0)
 @match((0,), 1)
@@ -109,6 +132,11 @@ def fib_pred(n):
 def fib_memo(n):
     if n <= 1: return 1
     return fib_memo(n-1) + fib_memo(n-2)
+
+@lookup_table(0, 1, 10, 20, 30)
+def fib_lookup(n):
+    if n <= 1: return 1
+    return fib_lookup(n-1) + fib_lookup(n-2)
 
 
 if __name__ == '__main__':
