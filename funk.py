@@ -134,11 +134,15 @@ def fib_pred(n):
 
 @memoize
 def fib_memo(n):
+    ''' Memoized fibnacci
+    '''
     if n <= 1: return 1
     return fib_memo(n-1) + fib_memo(n-2)
 
 @lookup_table([0], [1], [10], [20], [30])
 def fib_lookup(n):
+    ''' Fibonacci with a lookup table for certain values
+    '''
     if n <= 1: return 1
     return fib_lookup(n-1) + fib_lookup(n-2)
 
