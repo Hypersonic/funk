@@ -101,6 +101,7 @@ def lookup_table(*lookups):
         # we have to use a list so table_generated
         # won't get shadowed when we try to assign to it
         table_generated = [False]
+        @wraps(f)
         def inner(*args, **kwargs):
             # Generate the lookup table on the first call
             if not table_generated[0]:
