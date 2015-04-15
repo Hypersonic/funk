@@ -34,7 +34,8 @@ def match_pred(matches, result):
     def decorator(f):
         @wraps(f)
         def inner(*args, **kwargs):
-            if all(match is None or match(arg) for match, arg in zip(matches, args)):
+            if all(match is None or \
+                    match(arg) for match, arg in zip(matches, args)):
                 return result
             return f(*args, **kwargs)
         return inner
@@ -52,7 +53,8 @@ def precondition(pred):
             if pred(*args, **kwargs):
                 return f(*args, **kwargs)
             else:
-                raise ValueError("Precondition not met on function %s!"%f.func_name)
+                raise ValueError( \
+                        "Precondition not met on function %s!"%f.func_name)
         return inner
     return decorator
 
@@ -69,7 +71,8 @@ def postcondition(pred):
             if pred(result):
                 return result
             else:
-                raise ValueError("Postcondition not met on function %s!"%f.func_name)
+                raise ValueError( \
+                        "Postcondition not met on function %s!"%f.func_name)
         return inner
     return decorator
 
