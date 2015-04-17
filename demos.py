@@ -1,5 +1,4 @@
-from funk import \
-        precondition, postcondition, match, match_pred, memoize, lookup_table
+from funk import *
 
 @precondition(lambda x: x >= 0)
 @postcondition(lambda x: x > 0)
