@@ -43,7 +43,8 @@ def fib_lookup(n):
 
 
 if __name__ == '__main__':
-    print fib_match(10)
-    print fib_pred(10)
-    print fib_memo(10)
-    print fib_lookup(10)
+    print 'Naive:',naive_fib(10)
+    print 'Pattern matching:',fib_match(10)
+    print 'Predicate matching:',fib_pred(10)
+    print 'Memoized:',fib_memo(10)
+    print 'Lookup table:',fib_lookup(10)
