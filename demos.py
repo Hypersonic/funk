@@ -1,5 +1,11 @@
 from funk import *
 
+def naive_fib(n):
+    ''' Naive fibonacci implementation
+    '''
+    if n <= 1: return 1
+    return naive_fib(n-1) + naive_fib(n-2)
+
 @precondition(lambda x: x >= 0)
 @postcondition(lambda x: x > 0)
 @match((0,), 1)
